@@ -17,7 +17,7 @@ data = pd.read_csv(r'C:\Desktop\individual.csv')
 # Parameter setting
 ndim_phi = 100 # The number of grids for phi
 ndim_tau = 100 # The number of grids for tau
-samplesize = 1 # The sample size for random sampling for priors
+samplesize = 1000 # The sample size for random sampling for priors; assign 1 for fixed priors
 T = 100        # The number of rounds (fixed)
 nsample = 56   # The number of subjects; (Individual = 54, Group with DDM = 56, Group with CDM = 54)
 
@@ -38,8 +38,8 @@ for i in tqdm(range(ndim_phi)):
             for sample in range(samplesize):
                 for t in range(T):
                     if t == 0: # Initialize beliefs
-                        #belief = [0.1+random.uniform(0,0.8), 0.1+random.uniform(0,0.8)] #Randomized priors; need greater samplesize and take longer 
-                        belief = [0.5, 0.5] # priors are fixed at 0.5; samplesize=1
+                        #belief = [0.1+random.uniform(0,0.8), 0.1+random.uniform(0,0.8)] # Randomized priors; need greater samplesize and take longer 
+                        belief = [0.5, 0.5]                                              # priors are fixed at 0.5; samplesize=1
                     expbelief = [math.exp(belief[0]/tau),math.exp(belief[1]/tau)] 
                     prob_A = expbelief[0]/(expbelief[0] + expbelief[1]) # Soft-max choice rule
                     if data.iloc[k*100+t,2] == 0:
